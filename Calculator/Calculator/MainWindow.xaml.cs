@@ -88,21 +88,25 @@ namespace Calculator
 
         private void buttonDivide_Click(object sender, RoutedEventArgs e)
         {
+            firstEquation = false;
             textBox.Text = textBox.Text + "/";
         }
 
         private void buttonMultiply_Click(object sender, RoutedEventArgs e)
         {
+            firstEquation = false;
             textBox.Text = textBox.Text + "*";
         }
 
         private void buttonMinus_Click(object sender, RoutedEventArgs e)
         {
+            firstEquation = false;
             textBox.Text = textBox.Text + "-";
         }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
+            firstEquation = false;
             textBox.Text = textBox.Text + "+";
             currentState = '+';
         }
@@ -114,31 +118,20 @@ namespace Calculator
             switch (currentState)
             {
                 case '+':
-                    //if (firstEquation)
-                    //{
-                        string[] splitString = textBox.Text.Split('+', '-', '*', '/');
-                        int[] numbers = new int[2];
-                        int i = splitString.Length;
-                        // It's -1 because i = 2, but an array with 2 blocks is 0 and 1, 2 would be the third.
-                        numbers[0] = Convert.ToInt32(splitString[i - 1]);
-                        numbers[1] = Convert.ToInt32(splitString[i - 2]);
-                        // Should hopefully only add the last, and second to last numbers in the array. 
-
-                        int newNum = (numbers[0] + numbers[1]);
-                        runningTotal = runningTotal + newNum;
-                        firstEquation = false;
-                        break;
-                    /*}
-                    string[] splitStringOnce = textBox.Text.Split('+');
-                    int numbersOne;
-                    int j = splitStringOnce.Length;
+                    string[] splitString = textBox.Text.Split('+', '-', '*', '/');
+                    float[] numbers = new float[2];
+                    int i = splitString.Length;
                     // It's -1 because i = 2, but an array with 2 blocks is 0 and 1, 2 would be the third.
-                    numbersOne = Convert.ToInt32(splitStringOnce[j - 1]);
+                    numbers[0] = Convert.ToInt32(splitString[i - 1]);
+                    numbers[1] = Convert.ToInt32(splitString[i - 2]);
+                    // Need to remove what the actual tally was otherwise it will do "10 + 3 = 13... 13 + 5 is equal to "13 + 13 + 5"
+                    numbers[1] = numbers[1] - runningTotal;
                     // Should hopefully only add the last, and second to last numbers in the array. 
 
-                    float newNum2 = (runningTotal - numbersOne);
-                    runningTotal = runningTotal + newNum2;
-                    break;*/
+                    float newNum = (numbers[0] + numbers[1]);
+                    runningTotal = runningTotal + newNum;
+                    firstEquation = false;
+                    break;
                 default:
                     MessageBox.Show("Hey! This is appearing because you likely forgot to add in at least 2 numbers and 1 operator!");
                     break;
