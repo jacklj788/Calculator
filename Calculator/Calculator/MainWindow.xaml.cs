@@ -24,6 +24,7 @@ namespace Calculator
         float runningTotal = 0;
         bool firstEquation = true;
         char currentState;
+        int equalOrOperate = 0;
 
         public MainWindow()
         {
@@ -106,9 +107,32 @@ namespace Calculator
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-            firstEquation = false;
-            textBox.Text = textBox.Text + "+";
-            currentState = '+';
+            
+            if (firstEquation == false)
+            {
+                string[] splitString = textBox.Text.Split('+', '-', '*', '/');
+                float[] numbers = new float[2];
+                int i = splitString.Length;
+                // It's -1 because i = 2, but an array with 2 blocks is 0 and 1, 2 would be the third.
+                numbers[0] = Convert.ToInt32(splitString[i - 1]);
+                numbers[1] = Convert.ToInt32(splitString[i - 2]);
+                // Need to remove what the actual tally was otherwise it will do "10 + 3 = 13... 13 + 5 is equal to "13 + 13 + 5"
+                numbers[1] = numbers[1] - runningTotal;
+                // Should hopefully only add the last, and second to last numbers in the array. 
+
+                float newNum = (numbers[0] + numbers[1]);
+                runningTotal = runningTotal + newNum;
+                firstEquation = false;
+                textBox.Text = "" + runningTotal + "+";
+                currentState = '+';
+            }
+            if (firstEquation == true)
+            {
+                firstEquation = false;
+                textBox.Text = textBox.Text + "+";
+                currentState = '+';
+                //equalOrOperate++;
+            }
         }
 
         // This is where the magic happens. 
