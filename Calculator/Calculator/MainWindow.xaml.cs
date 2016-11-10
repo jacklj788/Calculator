@@ -24,7 +24,6 @@ namespace Calculator
         float runningTotal = 0;
         bool firstEquation = true;
         char currentState;
-        int equalOrOperate = 0;
 
         public MainWindow()
         {
@@ -101,16 +100,16 @@ namespace Calculator
 
         private void buttonMinus_Click(object sender, RoutedEventArgs e)
         {
-            firstEquation = false;
-            textBox.Text = textBox.Text + "-";
-        }
-
-        private void buttonAdd_Click(object sender, RoutedEventArgs e)
-        {
-            
-            if (firstEquation == false)
+            if (firstEquation == true)
             {
-                string[] splitString = textBox.Text.Split('+', '-', '*', '/');
+                firstEquation = false;
+                textBox.Text = textBox.Text + "-";
+                currentState = '-';
+                //equalOrOperate++;
+            }
+            else if (firstEquation == false)
+            {
+                string[] splitString = textBox.Text.Split('-');
                 float[] numbers = new float[2];
                 int i = splitString.Length;
                 // It's -1 because i = 2, but an array with 2 blocks is 0 and 1, 2 would be the third.
@@ -120,18 +119,41 @@ namespace Calculator
                 numbers[1] = numbers[1] - runningTotal;
                 // Should hopefully only add the last, and second to last numbers in the array. 
 
-                float newNum = (numbers[0] + numbers[1]);
+                float newNum = (numbers[1] - numbers[0]);
                 runningTotal = runningTotal + newNum;
-                firstEquation = false;
-                textBox.Text = "" + runningTotal + "+";
-                currentState = '+';
+                firstEquation = true;
+                textBox.Text = "" + runningTotal + "-";
+                currentState = '-';
             }
+        }
+
+        // WORKS
+        private void buttonAdd_Click(object sender, RoutedEventArgs e)
+        {
             if (firstEquation == true)
             {
                 firstEquation = false;
                 textBox.Text = textBox.Text + "+";
                 currentState = '+';
                 //equalOrOperate++;
+            }
+            else if (firstEquation == false)
+            {
+                string[] splitString = textBox.Text.Split('+');
+                float[] numbers = new float[2];
+                int i = splitString.Length;
+                // It's -1 because i = 2, but an array with 2 blocks is 0 and 1, 2 would be the third.
+                numbers[0] = Convert.ToInt32(splitString[i - 1]);
+                numbers[1] = Convert.ToInt32(splitString[i - 2]);
+                // Need to remove what the actual tally was otherwise it will do "10 + 3 = 13... 13 + 5 is equal to "13 + 13 + 5"
+                numbers[1] = numbers[1] - runningTotal;
+                // Should hopefully only add the last, and second to last numbers in the array. 
+
+                float newNum = (numbers[1] + numbers[0]);
+                runningTotal = runningTotal + newNum;
+                firstEquation = true;
+                textBox.Text = "" + runningTotal + "+";
+                currentState = '+';
             }
         }
 
@@ -154,7 +176,22 @@ namespace Calculator
 
                     float newNum = (numbers[0] + numbers[1]);
                     runningTotal = runningTotal + newNum;
-                    firstEquation = false;
+                    //firstEquation = false;
+                    break;
+                case '-':
+                    string[] splitString2 = textBox.Text.Split('+', '-', '*', '/');
+                    float[] numbers2 = new float[2];
+                    int i2 = splitString2.Length;
+                    // It's -1 because i = 2, but an array with 2 blocks is 0 and 1, 2 would be the third.
+                    numbers2[0] = Convert.ToInt32(splitString2[i - 1]);
+                    numbers2[1] = Convert.ToInt32(splitString2[i - 2]);
+                    // Need to remove what the actual tally was otherwise it will do "10 + 3 = 13... 13 + 5 is equal to "13 + 13 + 5"
+                    numbers2[1] = numbers2[1] - runningTotal;
+                    // Should hopefully only add the last, and second to last numbers in the array. 
+
+                    float newNum2 = (numbers2[0] - numbers2[1]);
+                    runningTotal = runningTotal - newNum2;
+                    //firstEquation = false;
                     break;
                 default:
                     MessageBox.Show("Hey! This is appearing because you likely forgot to add in at least 2 numbers and 1 operator!");
