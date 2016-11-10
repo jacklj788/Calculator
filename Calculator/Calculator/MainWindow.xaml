@@ -1,0 +1,29 @@
+﻿<Window x:Class="Calculator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Calculator"
+        mc:Ignorable="d"
+        Title="Calculator" Height="358.706" Width="333.085">
+    <Grid>
+        <Button x:Name="button0" Content="0" HorizontalAlignment="Left" Margin="10,259,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="button1" Content="1" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="button4" Content="4" HorizontalAlignment="Left" Margin="10,149,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="button7" Content="7" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="buttonDecimal" Content="." HorizontalAlignment="Left" Margin="91,259,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="button2" Content="2" HorizontalAlignment="Left" Margin="91,204,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="button5" Content="5" HorizontalAlignment="Left" Margin="91,149,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="button8" Content="8" HorizontalAlignment="Left" Margin="91,94,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="buttonEquals" Content="=" HorizontalAlignment="Left" Margin="171,259,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="button3" Content="3" HorizontalAlignment="Left" Margin="171,204,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="button6" Content="6" HorizontalAlignment="Left" Margin="171,149,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="button9" Content="9" HorizontalAlignment="Left" Margin="171,94,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="buttonDivide" Content="/" HorizontalAlignment="Left" Margin="252,259,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="buttonMultiply" Content="*" HorizontalAlignment="Left" Margin="252,204,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="buttonMinus" Content="-" HorizontalAlignment="Left" Margin="252,149,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="buttonAdd" Content="+" HorizontalAlignment="Left" Margin="252,94,0,0" VerticalAlignment="Top" Width="50" Height="50"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="64" Margin="10,17,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="292"/>
+
+    </Grid>
+</Window>
