@@ -183,8 +183,8 @@ namespace Calculator
                     float[] numbers2 = new float[2];
                     int i2 = splitString2.Length;
                     // It's -1 because i = 2, but an array with 2 blocks is 0 and 1, 2 would be the third.
-                    numbers2[0] = Convert.ToInt32(splitString2[i - 1]);
-                    numbers2[1] = Convert.ToInt32(splitString2[i - 2]);
+                    numbers2[0] = Convert.ToInt32(splitString2[i2 - 1]);
+                    numbers2[1] = Convert.ToInt32(splitString2[i2 - 2]);
                     // Need to remove what the actual tally was otherwise it will do "10 + 3 = 13... 13 + 5 is equal to "13 + 13 + 5"
                     numbers2[1] = numbers2[1] - runningTotal;
                     // Should hopefully only add the last, and second to last numbers in the array. 
