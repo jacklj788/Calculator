@@ -22,6 +22,8 @@ namespace Calculator
     public partial class MainWindow : Window
     {
         float runningTotal = 0;
+        // A float to store the 2 numbers that got split. Since we can't work with them as strings.
+        float[] numbers = new float[2];
         bool firstEquation = true;
         char currentState;
 
@@ -109,22 +111,26 @@ namespace Calculator
             }
             else if (firstEquation == false)
             {
-                string[] splitString = textBox.Text.Split('-');
-                float[] numbers = new float[2];
-                int i = splitString.Length;
-                // It's -1 because i = 2, but an array with 2 blocks is 0 and 1, 2 would be the third.
-                numbers[0] = Convert.ToInt32(splitString[i - 1]);
-                numbers[1] = Convert.ToInt32(splitString[i - 2]);
-                // Need to remove what the actual tally was otherwise it will do "10 + 3 = 13... 13 + 5 is equal to "13 + 13 + 5"
-                numbers[1] = numbers[1] - runningTotal;
-                // Should hopefully only add the last, and second to last numbers in the array. 
-
-                float newNum = (numbers[1] - numbers[0]);
-                runningTotal = runningTotal + newNum;
-                firstEquation = true;
-                textBox.Text = "" + runningTotal + "-";
+                if (currentState == '-')
+                {
+                    string[] splitString = textBox.Text.Split('+', '-', '*', '/');
+                    //char[] checkingForNeg;
+                    numbers[0] = Convert.ToInt32(splitString[0]);
+                    numbers[1] = Convert.ToInt32(splitString[1]);
+                    numbers[0] = numbers[0] - numbers[1];
+                    textBox.Text = "" + numbers[0] + "-";
+                }
+                else if (currentState == '+')
+                {
+                    string[] splitString = textBox.Text.Split('+', '-', '*', '/');
+                    numbers[0] = Convert.ToInt32(splitString[0]);
+                    numbers[1] = Convert.ToInt32(splitString[1]);
+                    numbers[0] = numbers[0] + numbers[1];
+                    textBox.Text = "" + numbers[0] + "+";
+                }
                 currentState = '-';
             }
+ 
         }
 
         // WORKS
@@ -139,20 +145,36 @@ namespace Calculator
             }
             else if (firstEquation == false)
             {
-                string[] splitString = textBox.Text.Split('+');
-                float[] numbers = new float[2];
-                int i = splitString.Length;
-                // It's -1 because i = 2, but an array with 2 blocks is 0 and 1, 2 would be the third.
-                numbers[0] = Convert.ToInt32(splitString[i - 1]);
-                numbers[1] = Convert.ToInt32(splitString[i - 2]);
-                // Need to remove what the actual tally was otherwise it will do "10 + 3 = 13... 13 + 5 is equal to "13 + 13 + 5"
-                numbers[1] = numbers[1] - runningTotal;
-                // Should hopefully only add the last, and second to last numbers in the array. 
-
-                float newNum = (numbers[1] + numbers[0]);
-                runningTotal = runningTotal + newNum;
-                firstEquation = true;
-                textBox.Text = "" + runningTotal + "+";
+                if (currentState == '+')
+                {
+                    // This will always be split until 2 numbers. These then later get stored in the numbers[] array so we can do math.
+                    string[] splitString = textBox.Text.Split('+', '-', '*', '/');
+                    /*
+                     * Example run { 5 + 3 }
+                     * num[0] = 5;
+                     * num[1] = 3;
+                     * num[0] = 5 + 3; (7)
+                     * num[0] is the total. (7). Display num 7 and the + sign {7+}
+                     * The user will then enter another number, say 3.. {7+3}
+                     * repeats the proces.. num[0] is 7 num[1] is 3.
+                     * num[0] = 7 + 3; (10)
+                     * now it's 10+ whatever. 
+                     * 
+                     */
+                    numbers[0] = Convert.ToInt32(splitString[0]);
+                    numbers[1] = Convert.ToInt32(splitString[1]);
+                    numbers[0] = numbers[0] + numbers[1];
+                    textBox.Text = "" + numbers[0] + "+";
+                }
+                else if (currentState == '-')
+                {
+                    string[] splitString = textBox.Text.Split('+', '-', '*', '/');
+                    //char[] checkingForNeg;
+                    numbers[0] = Convert.ToInt32(splitString[0]);
+                    numbers[1] = Convert.ToInt32(splitString[1]);
+                    numbers[0] = numbers[0] - numbers[1];
+                    textBox.Text = "" + numbers[0] + "-";
+                }
                 currentState = '+';
             }
         }
